@@ -25,10 +25,10 @@ CI_USER=$USER
 test -z $HOST_UID || (CI_USER="ci" && useradd -u $HOST_UID $CI_USER)
 
 # Build and test
-linux32 --32bit i386 su -m -l $CI_USER -c '
+linux32 --32bit i386 su -m -l $CI_USER -c "
 	set -ex
 	cd /usr/src/git
-	ln -s /tmp/travis-cache/.prove t/.prove
+	test -n '$cache_dir' && ln -s '$cache_dir/.prove' t/.prove
 	make --jobs=2
 	make --quiet test
-'
+"
