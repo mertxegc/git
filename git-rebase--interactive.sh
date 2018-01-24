@@ -162,6 +162,10 @@ s, squash = use commit, but meld into previous commit
 f, fixup = like \"squash\", but discard this commit's log message
 x, exec = run command (the rest of the line) using shell
 d, drop = remove commit
+l, label = label current HEAD with a name
+t, reset = reset HEAD to a label
+b, bud = reset HEAD to the revision labeled 'onto'
+m, merge = create a merge commit using a given commit's message
 
 These lines can be re-ordered; they are executed from top to bottom.
 " | git stripspace --comment-lines >>"$todo"
@@ -896,6 +900,8 @@ fi
 if test t != "$preserve_merges"
 then
 	git rebase--helper --make-script ${keep_empty:+--keep-empty} \
+		${recreate_merges:+--recreate-merges} \
+		${no_rebase_cousins:+--no-rebase-cousins} \
 		$revisions ${restrict_revision+^$restrict_revision} >"$todo" ||
 	die "$(gettext "Could not generate todo list")"
 else
