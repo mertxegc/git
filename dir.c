@@ -846,8 +846,8 @@ static int add_excludes(const char *fname, const char *base, int baselen,
 				oidcpy(&sha1_stat->oid,
 				       &istate->cache[pos]->oid);
 			else
-				hash_sha1_file(buf, size, "blob",
-					       sha1_stat->oid.hash);
+				hash_object_file(buf, size, "blob",
+						 &sha1_stat->oid);
 			fill_stat_data(&sha1_stat->stat, &st);
 			sha1_stat->valid = 1;
 		}
